@@ -3,7 +3,7 @@ import { Filters } from './Filters'
 export function Header() {
   return (
     <header>
-      <h1>React Shop 🛒</h1>
+      <h1>Shopping Cart React 🛒</h1>
       <Filters />
     </header>
   )

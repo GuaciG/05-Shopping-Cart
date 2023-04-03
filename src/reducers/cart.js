@@ -1,6 +1,7 @@
 //using useReducer
 //initialState:
-export const cartInitialState = []
+export const cartInitialState =
+  JSON.parse(window.localStorage.getItem('cart')) || []
 
 export const CART_ACTION_TYPES = {
   ADD_TO_CART: 'ADD_TO_CART',
@@ -8,41 +9,78 @@ export const CART_ACTION_TYPES = {
   CLEAR_CART: 'CLEAR_CART'
 }
 
+//update localStorage with state for cart
+export const updateLocalStorage = state => {
+  window.localStorage.setItem('cart', JSON.stringify(state))
+}
+
+const UPDATE_STATE_BY_ACTION = {
+  [CART_ACTION_TYPES.ADD_TO_CART]: (state, action) => {
+    const { id } = action.payload
+    const productInCartIndex = state.findIndex(item => item.id === id)
+
+    //if the product is in the cart:
+    if (productInCartIndex >= 0) {
+      //(👀 legible) Another way using structuredClone
+      /* const newState = structuredClone(state)
+      newState[productInCartIndex].quantity += 1 */
+
+      //(👶 easy) way using map
+      /* const newState = state.map(item => {
+        if (item.id === id) {
+          return {
+            ...item,
+            quantity: item.quantity + 1
+          }
+        }
+
+        return item
+      }) */
+
+      //(⚡ faster) way using spread operator y slice
+      const newState = [
+        ...state.slice(0, productInCartIndex),
+        {
+          ...state[productInCartIndex],
+          quantity: state[productInCartIndex].quantity + 1
+        },
+        ...state.slice(productInCartIndex + 1)
+      ]
+
+      updateLocalStorage(newState)
+      return newState
+    }
+
+    //if the product isn't in the cart:
+    const newState = [
+      ...state,
+      {
+        ...action.payload, //product
+        quantity: 1
+      }
+    ]
+
+    //before return make updateLocalStorage
+    updateLocalStorage(newState)
+    return newState
+  },
+
+  [CART_ACTION_TYPES.REMOVE_FROM_CART]: (state, action) => {
+    const { id } = action.payload
+    const newState = state.filter(item => item.id !== id)
+    updateLocalStorage(newState)
+    return newState
+  },
+
+  [CART_ACTION_TYPES.CLEAR_CART]: () => {
+    updateLocalStorage([])
+    return []
+  }
+}
+
 //reducer:
 export const cartReducer = (state, action) => {
-  const { type: actionType, payload: actionPayload } = action
-  switch (actionType) {
-    case CART_ACTION_TYPES.ADD_TO_CART: {
-      const { id } = actionPayload
-      const productInCartIndex = state.findIndex(item => item.id === id)
-
-      //if the product is in the cart:
-      if (productInCartIndex >= 0) {
-        //Another way using structuredClone
-        const newState = structuredClone(state)
-        newState[productInCartIndex].quantity += 1
-        return newState
-      }
-
-      //if the product isn't in the cart:
-      return [
-        ...state,
-        {
-          ...actionPayload, //product
-          quantity: 1
-        }
-      ]
-    }
-
-    case CART_ACTION_TYPES.REMOVE_FROM_CART: {
-      const { id } = actionPayload
-      return state.filter(item => item.id !== id)
-    }
-
-    case CART_ACTION_TYPES.CLEAR_CART: {
-      return cartInitialState
-    }
-  }
-
-  return state
+  const { type: actionType } = action
+  const updateState = UPDATE_STATE_BY_ACTION[actionType]
+  return updateState ? updateState(state, action) : state
 }

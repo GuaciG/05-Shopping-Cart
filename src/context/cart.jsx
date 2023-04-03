@@ -69,7 +69,7 @@ export function CartProvider({ children }) {
         clearCart
       }}
     >
-      //3. Consume the context in all children
+      {/* 3. Consume the context in all children */}
       {children}
     </CartContext.Provider>
   )

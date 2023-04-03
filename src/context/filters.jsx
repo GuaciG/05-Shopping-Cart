@@ -19,7 +19,7 @@ export function FiltersProvider({ children }) {
         setFilters
       }}
     >
-      //3. Consume the context in all children
+      {/* 3. Consume the context in all children */}
       {children}
     </FiltersContext.Provider>
   )

@@ -1,19 +1,21 @@
 .products {
   width: 100%;
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 
 .products ul {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
+  margin: 16px;
 }
 
 .products li {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 1rem;
   box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
