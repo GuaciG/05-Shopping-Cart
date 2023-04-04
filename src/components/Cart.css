@@ -1,11 +1,12 @@
 .cart {
-  background: #000;
+  background: rgba(255, 255, 255, 1);
   display: none;
   padding: 32px;
   position: fixed;
   right: 0px;
   top: 0px;
   width: 200px;
+  z-index: 9998;
 }
 
 .cart img {
@@ -38,9 +39,9 @@
   height: 32px;
   justify-content: center;
   padding: 4px;
-  position: absolute;
-  right: 8px;
-  top: 8px;
+  position: fixed;
+  right: 15px;
+  top: 15px;
   transition: all 0.3s ease;
   width: 32px;
   z-index: 9999;

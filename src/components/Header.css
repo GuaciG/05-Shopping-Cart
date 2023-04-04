@@ -1,0 +1,22 @@
+header {
+  background-color: #131921;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  color: aliceblue;
+}
+
+header h1 {
+  margin: 10px 0;
+  margin-left: 30px;
+  text-align: left;
+}
+
+@media screen and (max-width: 890px) {
+  header h1 {
+    font-size: 1.8em;
+    margin: 15px;
+  }
+}

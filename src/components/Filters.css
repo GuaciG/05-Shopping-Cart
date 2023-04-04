@@ -1,11 +1,14 @@
 .filters {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
   font-size: 14px;
   font-weight: 700;
   padding: 0 1rem;
-  margin-top: 2rem;
+  margin-top: 16px;
+  width: 25%;
+  gap: 1rem;
 }
 
 .filters > div {
@@ -13,10 +16,17 @@
   gap: 1rem;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 890px) {
+  .filters {
+    width: 90%;
+    margin-bottom: 2rem;
+  }
+}
+
+/* @media screen and (max-width: 600px) {
   .filters {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
-}
+} */

@@ -1,5 +1,6 @@
 import { useCart } from '../hooks/useCart'
 import { AddToCartIcon, RemoveFromCartIcon } from './Icons'
+import { Filters } from './Filters'
 import './Products.css'
 
 export function Products({ products }) {
@@ -11,6 +12,7 @@ export function Products({ products }) {
 
   return (
     <main className='products'>
+      <Filters />
       <ul>
         {products.slice(0, 30).map(product => {
           const isProductInCart = checkProductInCart(product)
